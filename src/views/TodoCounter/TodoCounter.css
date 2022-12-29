@@ -1,0 +1,14 @@
+/*Hoja de estilos dedicada solamente al componente TodoCounter.js*/
+
+h1{
+  font-size: 35px;
+  text-align: center;
+  background: linear-gradient(#e66465, #9198e5);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 24px;
+  text-align: center;
+}

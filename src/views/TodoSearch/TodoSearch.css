@@ -1,0 +1,22 @@
+.input-search {
+  text-align: center;
+  border: 0;
+  border-radius: 5rem;
+  height: 2rem;
+  border: 2px solid #fafafa;
+  margin: 0 24px;
+  width: calc(100% - 62px);
+  font-size: 24px;
+  padding: 2%;
+  font-weight: 400;
+  color: blue;
+}
+
+.input-search::placeholder {
+  color: #A5A5A5;
+  font-weight: 400;
+}
+
+.input-search:focus {
+  outline: none;
+}

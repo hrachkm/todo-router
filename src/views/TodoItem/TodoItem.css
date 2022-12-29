@@ -1,0 +1,44 @@
+.list-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 5px rgba(0, 25, 10, 0.5);
+  margin: 0 12px;
+}
+
+.list-container-p {
+  width: calc(100% - 120px);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.list-container-p--complete {
+  text-decoration: line-through;
+}
+
+.icon {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+.icon-check {
+  position: absolute;
+  left: 12px;
+}
+.icon-check--active {
+  position: absolute;
+  left: 12px;
+  color: greenyellow;
+}
+.icon-delete {
+  position: absolute;
+  right: 0;
+}
+.icon-delete:hover {
+  color: red;
+}
