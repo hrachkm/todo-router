@@ -15,6 +15,7 @@ export function TodoProvider(props) {
   const {
     item: todos,
     saveItem: saveTodos,
+    synchronizeApp: synchronizeTodos,
     loading,
     error,
   } = useLocalStorage("TODOS_V1", []);
@@ -51,8 +52,8 @@ export function TodoProvider(props) {
     const newTodos = [...todos];
     newTodos.push({
       text,
-      done: false
-    })
+      done: false,
+    });
     saveTodos(newTodos);
   };
 
@@ -75,6 +76,7 @@ export function TodoProvider(props) {
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
   };
+
   return (
     // En nuestro provider vamos a envolver nuestro componente app y asi indicarle que esta dentro de un contexto
     // y vamos a utilizar value para indicar el estado que se va a compartir en todos los componentes
@@ -91,12 +93,49 @@ export function TodoProvider(props) {
         addTodo,
         completeTodo,
         removeTodo,
-        setOpenModal
+        setOpenModal,
+        synchronizeTodos,
       }}
     >
       {props.children}
     </TodoContext.Provider>
   );
+
+  //Para no retornar uno a uno loa estados y actualizadores, podemos mejorar el codigo creando objectos donde colocamos
+  //nuestros estados y actualizadores y luego los retornamos
+
+  /* const states = {
+    totalTodos,
+    completedTodos,
+    searchValue,
+    searchedTodos,
+    loading,
+    error,
+    openModal,
+  };
+
+  const setStates = {
+    setSearchValue,
+    addTodo,
+    completeTodo,
+    removeTodo,
+    setOpenModal,
+    synchronizeTodos,
+  };*/
+
+  /*return (
+    // En nuestro provider vamos a envolver nuestro componente app y asi indicarle que esta dentro de un contexto
+    // y vamos a utilizar value para indicar el estado que se va a compartir en todos los componentes
+    <TodoContext.Provider
+      value = {{
+          states,
+          setStates,
+        }
+      }
+    >
+      {props.children}
+    </TodoContext.Provider>
+  );*/
 }
 
 // Y el consumer es para suministrar informacion a los componentes del un estado compartido

@@ -34,8 +34,8 @@ export function TodoForm() {
         />
       </div>
       <div className="form-actions">
-        <button class="btn-button btn-cancel" type="button" onClick={onCancel}>Cancel</button>
-        <button class="btn-button btn-submit" type="submit">Add task</button>
+        <button className="btn-button btn-cancel" type="button" onClick={onCancel}>Cancel</button>
+        <button className="btn-button btn-submit" type="submit">Add task</button>
       </div>
     </form>
   );
