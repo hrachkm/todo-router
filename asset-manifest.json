@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/todo-router/static/css/main.2e70a779.css",
+    "main.js": "/todo-router/static/js/main.6f418e44.js",
+    "static/js/787.486438b6.chunk.js": "/todo-router/static/js/787.486438b6.chunk.js",
+    "index.html": "/todo-router/index.html",
+    "main.2e70a779.css.map": "/todo-router/static/css/main.2e70a779.css.map",
+    "main.6f418e44.js.map": "/todo-router/static/js/main.6f418e44.js.map",
+    "787.486438b6.chunk.js.map": "/todo-router/static/js/787.486438b6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2e70a779.css",
+    "static/js/main.6f418e44.js"
+  ]
+}
