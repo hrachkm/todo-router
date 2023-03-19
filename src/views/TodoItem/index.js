@@ -11,6 +11,12 @@ export function TodoItem(props) {
       </span>
       <p className={`list-container-p ${props.done && 'list-container-p--complete'}`}>{props.text}</p>
       <span
+        className={`icon icon-edit`}
+        onClick={props.onEdit}
+      >
+        Edit
+      </span>
+      <span
         className={`icon icon-delete`}
         onClick={props.onDelete}
       >

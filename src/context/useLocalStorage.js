@@ -45,6 +45,7 @@ export const useLocalStorage = (itemName, initialValue) => {
         //setError(error);
       }
     }, 3000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [synchronize]);// - ahora este efecto se aplicara cada vez que ocurran cambios en el estado synchronize
 
   const saveItem = (newItem) => {

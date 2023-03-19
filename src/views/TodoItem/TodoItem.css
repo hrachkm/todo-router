@@ -35,6 +35,9 @@
   left: 12px;
   color: greenyellow;
 }
+.icon-edit:hover {
+  color: cornflowerblue;
+}
 .icon-delete {
   position: absolute;
   right: 0;

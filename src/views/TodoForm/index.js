@@ -1,33 +1,41 @@
 import React from "react";
-import { TodoContext } from "../../context/Todo";
+import { useNavigate } from "react-router-dom";
 
 import './TodoForm.css';
 
-export function TodoForm() {
+export function TodoForm(props) {
 
-  const[ newTodoValue, setNewTodoValue] = React.useState('');
-  const { addTodo, setOpenModal } = React.useContext(TodoContext)
+  const[ todoValue, setTodoValue] = React.useState('');
+  const navigate = useNavigate();
 
   const onChange = (event) => {
-    setNewTodoValue(event.target.value);
+    setTodoValue(event.target.value);
   }
 
   const onCancel = () => {
-    setOpenModal(false);
+    navigate('/');
   }
 
-  const onAdd = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    addTodo(newTodoValue);
-    setOpenModal(false);
+    props.submitEvent(todoValue);
+    navigate('/');
   }
+
+  React.useEffect(() => {
+    if(props.content && props.content.text){
+      setTodoValue(props.content.text);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <form onSubmit={onAdd}>
+    <form onSubmit={onSubmit}>
       <div className="form-input">
-        <label>Write your task</label>
+        <label>{props.title}</label>
         <textarea
           placeholder="Example: Do my homework"
-          value={newTodoValue}
+          value={todoValue}
           onChange={onChange}
           cols={10}
           rows={5}
@@ -35,7 +43,7 @@ export function TodoForm() {
       </div>
       <div className="form-actions">
         <button className="btn-button btn-cancel" type="button" onClick={onCancel}>Cancel</button>
-        <button className="btn-button btn-submit" type="submit">Add task</button>
+        <button className="btn-button btn-submit" type="submit">{props.buttonText}</button>
       </div>
     </form>
   );

@@ -10,7 +10,6 @@ export const TodoContext = React.createContext();
 
 export function TodoProvider(props) {
   // - Esta funcion va a actuar como componente y va a recibir props
-  // - console.log("Before render");
 
   const {
     item: todos,
@@ -18,11 +17,10 @@ export function TodoProvider(props) {
     synchronizeApp: synchronizeTodos,
     loading,
     error,
-  } = useLocalStorage("TODOS_V1", []);
+  } = useLocalStorage("TODOS_V2", []);
 
   // - Filtrar los todos dependiendo del valor contenido en search value
   const [searchValue, setSearchValue] = React.useState("");
-  const [openModal, setOpenModal] = React.useState(false);
 
   const completedTodos = todos.filter((todo) => todo.done === true).length;
   const totalTodos = todos.length;
@@ -40,25 +38,39 @@ export function TodoProvider(props) {
     });
   }
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     console.log("Just before render");
-  }, []); // - El segundo argumento de useEffect es un arrecglo que indica las condiciones bajo las cuales debe ejecutarse
+  }, []);*/ // - El segundo argumento de useEffect es un arrecglo que indica las condiciones bajo las cuales debe ejecutarse
   // - de lo contrario se va a ejecutar cada vez que se realice un cambio en el componente
   // - el arreglo vacio indica que el useEffect solo se va a ejecutar una vez y no va a reaccionar con cualquier cambio
   // - pero se puede hacer que el codigo se ejecute al detectar cambios en una propiedad o variable, en este caso totalTodos
   // - si se agrega o elimina una tarea este codigo se ejecutara.
 
   const addTodo = (text) => {
+    const id = newTodoId(todos);
     const newTodos = [...todos];
     newTodos.push({
+      id,
       text,
       done: false,
     });
     saveTodos(newTodos);
   };
 
-  const completeTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text);
+  const getTodo = (id) => {
+    const todoIndex = todos.findIndex(todo => todo.id === id);
+    return todos[todoIndex];
+  }
+
+  const editTodo = (id, newText) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id);
+    const newTodos = [...todos];
+    newTodos[todoIndex].text = newText;
+    saveTodos(newTodos);
+  }
+
+  const completeTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id);
     //Cuando se va a modificar el valor de un elemento en un estado, debemos extraer el valor en una variable externa, hacer el cambio
     //y colocarlo nuevamente en el estado, de lo contrario React no funcionara correctamete y no realizara los re renders que ejecuta
     //cuando se hacen cambios
@@ -67,8 +79,8 @@ export function TodoProvider(props) {
     saveTodos(newTodos);
   };
 
-  const removeTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text);
+  const removeTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id);
     //Cuando se va a modificar el valor de un elemento en un estado, debemos extraer el valor en una variable externa, hacer el cambio
     //y colocarlo nuevamente en el estado, de lo contrario React no funcionara correctamete y no realizara los re renders que ejecuta
     //cuando se hacen cambios
@@ -88,55 +100,26 @@ export function TodoProvider(props) {
         searchedTodos,
         loading,
         error,
-        openModal,
         setSearchValue,
         addTodo,
+        editTodo,
+        getTodo,
         completeTodo,
         removeTodo,
-        setOpenModal,
         synchronizeTodos,
       }}
     >
       {props.children}
     </TodoContext.Provider>
   );
-
-  //Para no retornar uno a uno loa estados y actualizadores, podemos mejorar el codigo creando objectos donde colocamos
-  //nuestros estados y actualizadores y luego los retornamos
-
-  /* const states = {
-    totalTodos,
-    completedTodos,
-    searchValue,
-    searchedTodos,
-    loading,
-    error,
-    openModal,
-  };
-
-  const setStates = {
-    setSearchValue,
-    addTodo,
-    completeTodo,
-    removeTodo,
-    setOpenModal,
-    synchronizeTodos,
-  };*/
-
-  /*return (
-    // En nuestro provider vamos a envolver nuestro componente app y asi indicarle que esta dentro de un contexto
-    // y vamos a utilizar value para indicar el estado que se va a compartir en todos los componentes
-    <TodoContext.Provider
-      value = {{
-          states,
-          setStates,
-        }
-      }
-    >
-      {props.children}
-    </TodoContext.Provider>
-  );*/
+  // En esta version se van a trabajar los todos con id, por esto creamos un generador de ids para que retorne el valor maximo
+  // y le sume 1
+  function newTodoId(todos){
+    const todoIds =  todos.map(todo => todo.id);
+    const idMax = Math.max(0, ...todoIds);
+    return idMax + 1;
+  }
 }
 
-// Y el consumer es para suministrar informacion a los componentes del un estado compartido
+// Y el consumer es para suministrar informacion a los componentes de un estado compartido
 <TodoContext.Consumer></TodoContext.Consumer>;
